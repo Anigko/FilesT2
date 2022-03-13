@@ -14,25 +14,18 @@ public class Main {
         GameProgress gameProgress = new GameProgress(94, 2, 2, 100);
         GameProgress gameProgress2 = new GameProgress(80, 4, 3, 200);
         GameProgress gameProgress3 = new GameProgress(70, 6, 4, 300);
-        try (FileOutputStream fos = new FileOutputStream("C:/Games/savegames/1.dat");
-             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(gameProgress);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        try (FileOutputStream fos = new FileOutputStream("C:/Games/savegames/2.dat");
-             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(gameProgress2);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        try (FileOutputStream fos = new FileOutputStream("C:/Games/savegames/3.dat");
-             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(gameProgress3);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
 
+        String[] savedGames = {"1.dat", "2.dat", "3.dat"};
+
+        for (int i = 0; i < savedGames.length; i++) {
+
+            try (FileOutputStream fos = new FileOutputStream("C:/Games/savegames/" + savedGames[i]);
+                 ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                oos.writeObject(gameProgress);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
         String zipArchive = "C:/Games/savegames/archive.zip";
         String[] savedProgress = {"C:/Games/savegames/1.dat", "C:/Games/savegames/2.dat", "C:/Games/savegames/3.dat"};
 
@@ -55,18 +48,15 @@ public class Main {
             System.out.println("Ошибка создания массива: " + ioe);
         }
 
-        File file1 = new File("C:/Games/savegames/1.dat");
-        if (file1.delete()) {
-            System.out.println("Файл 1.dat удален");
+        String[] savedGamesForDelete = {"1.dat", "2.dat", "3.dat"};
+
+        for (int i = 0; i < savedGamesForDelete.length; i++) {
+            File file = new File("C:/Games/savegames/" + savedGamesForDelete[i]);
+            if (file.delete()) {
+                System.out.println("Файл " + savedGamesForDelete[i] + " успешно удален");
+            }
         }
-        File file2 = new File("C:/Games/savegames/2.dat");
-        if (file2.delete()) {
-            System.out.println("Файл 2.dat удален");
-        }
-        File file3 = new File("C:/Games/savegames/3.dat");
-        if (file3.delete()) {
-            System.out.println("Файл 3.dat удален");
-        }
+
     }
 }
 
